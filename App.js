@@ -17,3 +17,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+/*
+ <View style={styles.container}>
+ {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+ <AppNavigator />
+ </View>
+*/
