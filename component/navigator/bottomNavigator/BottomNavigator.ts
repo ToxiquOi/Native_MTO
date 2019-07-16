@@ -1,0 +1,28 @@
+import {BottomTabNavigatorConfig, createBottomTabNavigator, NavigationRouteConfigMap} from "react-navigation";
+import HomeStackNav from "../homeStackNavigator/HomeStackNav";
+import AboutScreen from "../../../screens/AboutScreen";
+
+import Colors from '../../../constants/Colors';
+
+const navRouteConf: NavigationRouteConfigMap = {
+    HomeStackNav,
+    AboutScreen
+};
+
+const navOptions: BottomTabNavigatorConfig = {
+    tabBarOptions: {
+        activeBackgroundColor: '#1313ff',
+        inactiveBackgroundColor: '#0059ff',
+        tabStyle: {
+
+        },
+        activeTintColor: Colors.tabIconSelected,
+        inactiveTintColor: Colors.tabIconDefault,
+        keyboardHidesTabBar: true
+    },
+};
+
+const BottomNav = createBottomTabNavigator(navRouteConf, navOptions);
+
+
+export default BottomNav;

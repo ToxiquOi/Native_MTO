@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "meteo_amandine",
-    "slug": "meteo_amandine",
+    "name": "meteo",
+    "slug": "meteo_ts_amandine",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
