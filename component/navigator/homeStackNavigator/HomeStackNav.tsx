@@ -14,7 +14,7 @@ const navigationOptions = {
         backgroundColor: Colors.tintColor
     },
     headerTitleStyle: {
-        color: '#FFF'
+        color: Colors.noticeText
     }
 }
 

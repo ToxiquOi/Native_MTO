@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, Button, TextInput, NativeSyntheticEvent, NativeT
 import Search from "../component/search/Search";
 import Axios from 'axios';
 import {WeatherCenter} from "../web/WeatherCenter";
+import Colors from "../constants/Colors";
 
 
 const styles = StyleSheet.create({
@@ -29,7 +30,7 @@ interface State {
     city: string
 }
 
-export default class HomeScreen extends Component<Props, State> {
+export default class HomeScreen extends Component {
 
     static navigationOptions = (params) => {
         return {
@@ -37,18 +38,21 @@ export default class HomeScreen extends Component<Props, State> {
         }
     };
 
-    state: State = {
+    state = {
         city: 'Strasbourg'
     };
-
-    queryCity(event: NativeSyntheticEvent<NativeTouchEvent>) {
-        this.props.navigation.navigate('Result', {city: this.state.city});
-    }
 
     constructor(props) {
         super(props)
 
-        this.queryCity = this.queryCity.bind(this);
+        this.submit = this.submit.bind(this);
+    }
+
+    submit() {
+        // @ts-ignore
+        this.props.navigation.navigate('Result', {
+            city: this.state.city
+        });
     }
 
     handleState(city: string) {
@@ -69,7 +73,7 @@ export default class HomeScreen extends Component<Props, State> {
                     style={styles.input}
                     underlineColorAndroid={'transparent'}
                 />
-                <Button title={'search'} onPress={this.queryCity}/>
+                <Button title={'search'} onPress={this.submit} color={Colors.tintColor}/>
             </View>
         );
     }

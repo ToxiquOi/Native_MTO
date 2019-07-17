@@ -11,8 +11,8 @@ const navRouteConf: NavigationRouteConfigMap = {
 
 const navOptions: BottomTabNavigatorConfig = {
     tabBarOptions: {
-        activeBackgroundColor: '#1313ff',
-        inactiveBackgroundColor: '#0059ff',
+        activeBackgroundColor: Colors.inactivebackground,
+        inactiveBackgroundColor: Colors.tintColor,
         tabStyle: {
 
         },
