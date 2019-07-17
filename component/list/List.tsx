@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
-import {Text, ProgressBarAndroid, NativeSyntheticEvent, NativeTouchEvent} from 'react-native';
-import ProgressBar from 'react-native-progress/Bar';
+import React, { Component, Fragment } from 'react';
+import {Text, ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
 import {WeatherCenter} from "../../web/WeatherCenter";
-import AppLoading from "expo/build/launch/AppLoading";
+import Colors from "../../constants/Colors";
+
+const style = StyleSheet.create({
+   activity: {
+        height: Dimensions.get("screen").height
+   }
+});
 
 interface Props {
 
@@ -12,6 +17,41 @@ interface State {
     isLoading: boolean,
     city: string,
     report
+}
+
+interface AllWeatherInfo {
+    cloud: {
+        all: number
+    },
+    dt: number,
+    dt_txt: string,
+    main: {
+        grnd_level: number,
+        humidity: number,
+        pressure: number,
+        sea_level: number,
+        temp: number,
+        temp_kf: number,
+        temp_max: number,
+        temp_min: number,
+    },
+    sys: {
+        pod: "d"
+    },
+    weather: Weather[],
+    wind: {
+        deg: number,
+        speed: number,
+    }
+
+
+}
+
+interface Weather {
+    description: string,
+    icon: string,
+    id: number,
+    main: string,
 }
 
 export default class List extends Component<Props, State> {
@@ -24,13 +64,12 @@ export default class List extends Component<Props, State> {
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: `Météo de la ville de ${navigation.state.params.city}`,
+            title: `Météo de ${navigation.state.params.city}`,
         }
     };
 
     constructor(props) {
         super(props);
-
         this.queryCityWeather = this.queryCityWeather.bind(this);
     }
 
@@ -60,13 +99,23 @@ export default class List extends Component<Props, State> {
     }
 
     render() {
-        const report = JSON.stringify(this.state.report);
-        console.log('stringify', report);
+        const weathersInfos: AllWeatherInfo[] = this.state.report;
+        console.log('weather', weathersInfos);
         if(this.state.isLoading) {
-            return // TODO: loading bar for wait API response
+            return <ActivityIndicator style={style.activity} size={"large"} color={Colors.tintColor} />
         }
         else {
-            return <Text>{report}</Text>
+            return (
+                <Fragment>
+                    {weathersInfos.map((weatherInfo: AllWeatherInfo, index) => {
+                        return (
+                            <Fragment key={index}>
+                                <Text>{weatherInfo.main.temp_max}</Text>
+                            </Fragment>
+                        );
+                    })}
+                </Fragment>
+            );
         }
     }
 }
