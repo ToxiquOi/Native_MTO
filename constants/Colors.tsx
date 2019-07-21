@@ -18,6 +18,7 @@ const tintColor = '#a3036c';
 
 export default {
   tintColor,
+  row: '#ff6a28',
   tabIconDefault: '#ccc',
   tabIconSelected: '#bde8ff',
   tabBar: '#fefefe',

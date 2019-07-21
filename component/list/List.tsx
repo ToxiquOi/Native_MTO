@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import {Text, ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
-import {WeatherCenter} from "../../web/WeatherCenter";
+import {View, Text, ActivityIndicator, StyleSheet, Dimensions, Animated, ListView, FlatList} from 'react-native';
+import {WeatherCenter, AllWeatherInfo} from "../../web/WeatherCenter";
 import Colors from "../../constants/Colors";
+import InfoRow from "../infoRow/InfoRow";
 
 const style = StyleSheet.create({
    activity: {
-        height: Dimensions.get("screen").height
+        height: Dimensions.get("window").height / 2,
    }
 });
 
@@ -19,40 +20,7 @@ interface State {
     report
 }
 
-interface AllWeatherInfo {
-    cloud: {
-        all: number
-    },
-    dt: number,
-    dt_txt: string,
-    main: {
-        grnd_level: number,
-        humidity: number,
-        pressure: number,
-        sea_level: number,
-        temp: number,
-        temp_kf: number,
-        temp_max: number,
-        temp_min: number,
-    },
-    sys: {
-        pod: "d"
-    },
-    weather: Weather[],
-    wind: {
-        deg: number,
-        speed: number,
-    }
 
-
-}
-
-interface Weather {
-    description: string,
-    icon: string,
-    id: number,
-    main: string,
-}
 
 export default class List extends Component<Props, State> {
 
@@ -60,7 +28,7 @@ export default class List extends Component<Props, State> {
         city: '',
         report: null,
         isLoading: true
-    }
+    };
 
     static navigationOptions = ({navigation}) => {
         return {
@@ -106,15 +74,9 @@ export default class List extends Component<Props, State> {
         }
         else {
             return (
-                <Fragment>
-                    {weathersInfos.map((weatherInfo: AllWeatherInfo, index) => {
-                        return (
-                            <Fragment key={index}>
-                                <Text>{weatherInfo.main.temp_max}</Text>
-                            </Fragment>
-                        );
-                    })}
-                </Fragment>
+                <View >
+                    <FlatList data={weathersInfos} keyExtractor={((item, index) => index.toString())} renderItem={({item}) => <InfoRow weatherInfo={item}/>}/>
+                </View>
             );
         }
     }
