@@ -1,10 +1,7 @@
 import React, {Component} from "react";
 import {View, Text, StyleSheet, Image} from "react-native";
-import {AllWeatherInfo} from "../../web/WeatherCenter";
+import {AllWeatherInfo, WeatherCenter} from "../../web/WeatherCenter";
 import Colors from "../../constants/Colors";
-import {MeteoImageSelector} from "../../services/meteoImageSelector/MeteoImageSelector";
-
-
 
 interface Props {
     weatherInfo: AllWeatherInfo
@@ -54,28 +51,31 @@ export default class InfoRow extends Component<Props, State> {
             state.humidity = this.props.weatherInfo.main.humidity;
             state.tempMax = this.props.weatherInfo.main.temp_max;
             state.tempMin = this.props.weatherInfo.main.temp_min;
-            state.iconDescription = this.props.weatherInfo.weather[0].description;
+            state.iconDescription = this.props.weatherInfo.weather[0].icon;
 
             return state
         });
     }
 
     render() {
-        const imageKey = MeteoImageSelector.getPathImage(this.state.iconDescription);
-        const path = `../../assets/${imageKey}.png`;
-        console.log('path', path);
+        const hours = this.state.hours;
+        const date = this.state.date;
+        const tempMax = this.state.tempMax;
+        const tempMin = this.state.tempMin;
+
 
         return (
             <View style={style.mainContainer}>
-                <View style={style.subContainer}>
-                    <Text>{this.state.date}</Text>
-                    <Text>{this.state.hours}</Text>
+                <View style={style.title}>
+                    <Text style={{marginLeft: 3}}>le { date } à { hours }</Text>
                 </View>
                 <View style={style.subContainer}>
-                    <Text>{this.state.tempMax}°C</Text>
-                    <Text>{this.state.tempMin}°C</Text>
+                    <Image style={style.image} source={{uri: `http://openweathermap.org/img/wn/${this.state.iconDescription}@2x.png`}}/>
+                    <View style={style.tempContainer}>
+                        <Text>Maximum: {tempMax}°C</Text>
+                        <Text>Minimum: {tempMin}°C</Text>
+                    </View>
                 </View>
-                <Image style={style.image} source={{uri: path}}/>
             </View>
         );
     }
@@ -83,20 +83,43 @@ export default class InfoRow extends Component<Props, State> {
 
 const style = StyleSheet.create({
     mainContainer: {
-        height: 50,
+        height: 70,
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flexDirection: 'column',
         backgroundColor: Colors.row,
         borderWidth: 1,
-        borderColor: 'grey'
+        borderColor: "transparent",
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5
     },
     subContainer: {
         flex: 1,
-        width: 5
+        flexDirection: 'row',
+        width: "100%",
+        borderColor: 'transparent',
+        backgroundColor: '#eddba7',
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+        alignContent: "center"
+    },
+    tempContainer: {
+        flex: 1,
+        flexDirection: "column",
+        marginTop: 3,
+        marginLeft: "50%"
     },
     image: {
-        height: 10,
-        width: 10
-    }
+        marginBottom: 1,
+        height: 50,
+        width: 50,
+        backgroundColor: 'transparent'
+    },
+    title: {
+        backgroundColor: '#65adff',
+        width: "100%",
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+    },
 });

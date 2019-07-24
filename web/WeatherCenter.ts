@@ -45,8 +45,6 @@ export class WeatherCenter {
         city = city.toLowerCase();
         return axios.get(url + city + unit + appid).then( response => {
             return response.data.list;
-        }).catch(error => console.warn(error));
+        }).catch(error => console.warn('get weather: ', error));
     }
-
-    static
 }

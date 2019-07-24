@@ -38,7 +38,6 @@ const HomeStack = createStackNavigator(navRouteConf, stackNavConf)
 HomeStack.navigationOptions = {
     tabBarLabel: 'Home',
     tabBarIcon: ({ focused }) => (
-        // @ts-ignore
         <TabBarIcon
             focused={focused}
             name={'home'}

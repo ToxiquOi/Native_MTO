@@ -2,8 +2,16 @@ import React, { Component, Fragment } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import Colors from "../../../constants/Colors";
 
+interface Props {
+    name: string,
+    focused?: boolean
+}
 
-export default class TabBarIcon extends Component {
+interface State {
+
+}
+
+export default class TabBarIcon extends Component<Props, State> {
 
     constructor(props) {
         super(props);
@@ -13,12 +21,11 @@ export default class TabBarIcon extends Component {
         return (
             <Fragment>
                 <MaterialIcons
-                    // @ts-ignore
                     name={this.props.name}
                     size={26}
                     style={{ marginBottom: -3 }}
-                    // @ts-ignore
-                    color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}/>
+                    color={this.props.focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+                />
             </Fragment>
         )
     }

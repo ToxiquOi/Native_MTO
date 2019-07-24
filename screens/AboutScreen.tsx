@@ -11,12 +11,19 @@ const styles = StyleSheet.create({
     },
 });
 
-export default class AboutScreen extends Component {
+interface Props {
+
+}
+
+interface State {
+
+}
+
+export default class AboutScreen extends Component<Props, State> {
 
     static navigationOptions = {
         title: 'About',
         tabBarIcon: ({ focused }) => {
-            // @ts-ignore
             return <TabBarIcon
                     focused={focused}
                     name={'info'}
