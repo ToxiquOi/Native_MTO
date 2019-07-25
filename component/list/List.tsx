@@ -1,16 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import {Text, ActivityIndicator, StyleSheet, Dimensions} from 'react-native';
-import {WeatherCenter} from "../../web/WeatherCenter";
+import React, { Component } from 'react';
+import {View, ActivityIndicator, StyleSheet, Dimensions, Animated, ListView, FlatList} from 'react-native';
+import {WeatherCenter, AllWeatherInfo} from "../../web/WeatherCenter";
 import Colors from "../../constants/Colors";
-
-const style = StyleSheet.create({
-   activity: {
-        height: Dimensions.get("screen").height
-   }
-});
+import InfoRow from "../infoRow/InfoRow";
 
 interface Props {
-
+    navigation
 }
 
 interface State {
@@ -19,52 +14,17 @@ interface State {
     report
 }
 
-interface AllWeatherInfo {
-    cloud: {
-        all: number
-    },
-    dt: number,
-    dt_txt: string,
-    main: {
-        grnd_level: number,
-        humidity: number,
-        pressure: number,
-        sea_level: number,
-        temp: number,
-        temp_kf: number,
-        temp_max: number,
-        temp_min: number,
-    },
-    sys: {
-        pod: "d"
-    },
-    weather: Weather[],
-    wind: {
-        deg: number,
-        speed: number,
-    }
-
-
-}
-
-interface Weather {
-    description: string,
-    icon: string,
-    id: number,
-    main: string,
-}
-
 export default class List extends Component<Props, State> {
 
     state: State = {
-        city: '',
+        city: 'strasbourg',
         report: null,
         isLoading: true
-    }
+    };
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: `Météo de ${navigation.state.params.city}`,
+            title: `Météo ${navigation.state.params.city}      `,
         }
     };
 
@@ -74,7 +34,7 @@ export default class List extends Component<Props, State> {
     }
 
     queryCityWeather() {
-        WeatherCenter.getWeatherFromCityName(this.state.city).then(report => {
+        WeatherCenter.getCityWeekWeather(this.state.city).then(report => {
             this.setState((state: State) => {
                 state.isLoading = false;
                 state.report = report;
@@ -85,7 +45,6 @@ export default class List extends Component<Props, State> {
 
     componentWillMount(): void {
         this.setState( (state: State) => {
-            // @ts-ignore
             const params = this.props.navigation.state.params;
             state.city = params.city;
             state.isLoading = true;
@@ -106,16 +65,16 @@ export default class List extends Component<Props, State> {
         }
         else {
             return (
-                <Fragment>
-                    {weathersInfos.map((weatherInfo: AllWeatherInfo, index) => {
-                        return (
-                            <Fragment key={index}>
-                                <Text>{weatherInfo.main.temp_max}</Text>
-                            </Fragment>
-                        );
-                    })}
-                </Fragment>
+                <View style={{backgroundColor: 'gray'}}>
+                    <FlatList data={weathersInfos} keyExtractor={((item, index) => index.toString())} renderItem={({item}) => <InfoRow weatherInfo={item}/>}/>
+                </View>
             );
         }
     }
 }
+
+const style = StyleSheet.create({
+    activity: {
+        height: Dimensions.get("window").height / 2,
+    }
+});
