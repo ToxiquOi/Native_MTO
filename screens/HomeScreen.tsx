@@ -1,76 +1,50 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Button, TextInput} from "react-native";
-import Colors from "../constants/Colors";
+import {FlatList, StyleSheet, View} from "react-native";
+import Search from "../component/search/Search";
+import {NavigationScreenProp, NavigationStackScreenOptions} from "react-navigation";
+import CurrentWeatherInfo from "../component/currentWeatherInfo/CurrentWeatherInfo";
+
 
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlignVertical: "center"
-    },
-    input: {
-        height: 40,
-        width: '100%',
-        borderColor: 'gray',
-        borderWidth: 1
+        flexDirection: "column"
     },
 });
 
 interface Props {
-
+    navigation?: NavigationScreenProp<any, any>,
 }
 
 interface State {
     city: string
 }
 
-export default class HomeScreen extends Component {
+export default class HomeScreen extends Component<Props, State> {
 
-    static navigationOptions = (params) => {
+    static navigationOptions = (params): NavigationStackScreenOptions => {
         return {
-            title: 'Rechercher une ville'
+            title: 'Rechercher une ville',
         }
     };
 
     state = {
-        city: 'Strasbourg'
+        city: 'Erstein'
     };
 
     constructor(props) {
         super(props)
-
-        this.submit = this.submit.bind(this);
-    }
-
-    submit() {
-        // @ts-ignore
-        this.props.navigation.navigate('Result', {
-            city: this.state.city
-        });
-    }
-
-    handleState(city: string) {
-        return this.setState((state: State) => {
-            state.city = city;
-
-            console.log('set: ' + state.city);
-            return state;
-        });
     }
 
     render() {
         return (
-            <View>
-                <TextInput
-                    value={this.state.city}
-                    onChangeText={city => this.handleState(city)}
-                    style={styles.input}
-                    underlineColorAndroid={'transparent'}
+            <View style={styles.container}>
+                <Search navigation={this.props.navigation}/>
+                <FlatList data={[this.state.city]}
+                          keyExtractor={((item, index) => index.toString())}
+                          renderItem={({item}) => <CurrentWeatherInfo city={item}/>}
                 />
-                <Button title={'search'} onPress={this.submit} color={Colors.tintColor}/>
             </View>
         );
     }

@@ -1,7 +1,9 @@
 import axios from 'axios';
+import CurrentWeatherInfo from "../component/currentWeatherInfo/CurrentWeatherInfo";
+import {number} from "prop-types";
 
 const urlWeek = 'https://api.openweathermap.org/data/2.5/forecast?q=';
-const urlCurrent = 'api.openweathermap.org/data/2.5/weather?q=';
+const urlCurrent = 'https://api.openweathermap.org/data/2.5/weather?q=';
 const appid = '&appid=143e4c3e59299e4a8c8bb745ea0ddec4';
 const unit = '&units=metric';
 
@@ -30,7 +32,42 @@ export interface AllWeatherInfo {
         speed: number,
     }
 
+}
 
+export interface CurrentWeather {
+    coord: {
+        lon: number,
+        lat: number,
+    },
+    weather: Weather[],
+    base: string,
+    main: {
+        temp: number,
+        pressure: number,
+        humidity: number,
+        temp_min: number,
+        temp_max: number,
+    },
+    visibility: number,
+    wind: {
+        speed: number,
+        deg: number,
+    },
+    clouds: {
+        all: number,
+    },
+    dt: number,
+    sys:{
+        type: number,
+        id: number,
+        message: number,
+        country: string,
+        sunrise: number,
+        sunset: number,
+    },
+    id: number,
+    name: string,
+    cod: number,
 }
 
 export interface Weather {
@@ -52,7 +89,7 @@ export class WeatherCenter {
     static getCurrentCityWeather(city: string) {
         city = city.toLowerCase();
         return axios.get(urlCurrent + city + unit + appid).then( response => {
-            return response.data.list;
+            return response.data;
         }).catch(error => console.warn('get current weather: ', error));
     }
 }

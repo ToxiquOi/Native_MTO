@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {View, ActivityIndicator, StyleSheet, Dimensions, Animated, ListView, FlatList} from 'react-native';
-import {WeatherCenter, AllWeatherInfo} from "../../web/WeatherCenter";
-import Colors from "../../constants/Colors";
-import InfoRow from "../infoRow/InfoRow";
+import {WeatherCenter, AllWeatherInfo} from "../web/WeatherCenter";
+import Colors from "../constants/Colors";
+import InfoRow from "../component/infoRow/InfoRow";
 
 interface Props {
     navigation
@@ -14,7 +14,7 @@ interface State {
     report
 }
 
-export default class List extends Component<Props, State> {
+export default class ListScreen extends Component<Props, State> {
 
     state: State = {
         city: 'strasbourg',
@@ -59,7 +59,6 @@ export default class List extends Component<Props, State> {
 
     render() {
         const weathersInfos: AllWeatherInfo[] = this.state.report;
-        console.log('weather', weathersInfos);
         if(this.state.isLoading) {
             return <ActivityIndicator style={style.activity} size={"large"} color={Colors.tintColor} />
         }

@@ -99,7 +99,7 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         width: "100%",
         borderColor: 'transparent',
-        backgroundColor: '#eddba7',
+        backgroundColor: Colors.cardBackground,
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
         alignContent: "center"
@@ -117,7 +117,7 @@ const style = StyleSheet.create({
         backgroundColor: 'transparent'
     },
     title: {
-        backgroundColor: '#65adff',
+        backgroundColor: Colors.cardTitleBackground,
         width: "100%",
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,

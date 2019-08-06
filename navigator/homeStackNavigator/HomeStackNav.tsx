@@ -3,11 +3,11 @@ import {
     NavigationRouteConfigMap,
     StackNavigatorConfig
 } from 'react-navigation'
-import HomeScreen from "../../../screens/HomeScreen";
-import TabBarIcon from "../icons/TabBarIcon";
+import HomeScreen from "../../screens/HomeScreen";
+import TabBarIcon from "../../component/icons/TabBarIcon";
 import * as React from "react";
-import List from "../../list/List";
-import Colors from "../../../constants/Colors";
+import ListScreen from "../../screens/ListScreen";
+import Colors from "../../constants/Colors";
 
 const navigationOptions = {
     headerStyle: {
@@ -24,7 +24,7 @@ const navRouteConf: NavigationRouteConfigMap = {
         navigationOptions
     },
     Result: {
-        screen: List,
+        screen: ListScreen,
         navigationOptions
     }
 };
@@ -42,7 +42,7 @@ HomeStack.navigationOptions = {
             focused={focused}
             name={'home'}
         />
-    )
+    ),
 };
 
 export default HomeStack;

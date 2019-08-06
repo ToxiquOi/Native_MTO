@@ -1,8 +1,8 @@
 import {BottomTabNavigatorConfig, createBottomTabNavigator, NavigationRouteConfigMap} from "react-navigation";
 import HomeStackNav from "../homeStackNavigator/HomeStackNav";
-import AboutScreen from "../../../screens/AboutScreen";
+import AboutScreen from "../../screens/AboutScreen";
 
-import Colors from '../../../constants/Colors';
+import Colors from '../../constants/Colors';
 
 const navRouteConf: NavigationRouteConfigMap = {
     HomeStackNav,

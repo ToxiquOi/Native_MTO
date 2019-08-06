@@ -29,4 +29,6 @@ export default {
   inactivebackground: '#ff1dc9',
   noticeBackground: tintColor,
   noticeText: '#fff',
+  cardBackground: '#eddba7',
+  cardTitleBackground: "#65adff",
 };

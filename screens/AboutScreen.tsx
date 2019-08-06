@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet} from "react-native";
-import TabBarIcon from "../component/navigator/icons/TabBarIcon";
+import TabBarIcon from "../component/icons/TabBarIcon";
 
 const styles = StyleSheet.create({
     container: {

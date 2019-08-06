@@ -1,44 +1,68 @@
 import React, {Component, Fragment} from 'react'
-import {TextInput, StyleSheet} from "react-native";
+import {TextInput, StyleSheet, Button, View} from "react-native";
+import Colors from "../../constants/Colors";
+import {NavigationScreenProp} from "react-navigation";
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlignVertical: "center"
+    },
     input: {
         height: 40,
         width: '100%',
         borderColor: 'gray',
         borderWidth: 1
-    }
+    },
 });
+interface Props {
+    navigation?: NavigationScreenProp<any, any>
+}
 
-export default class Search extends Component {
+interface State {
+    city: string
+}
+
+export default class Search extends Component<Props, State> {
     state = {
-        text: ''
+        city: 'Erstein'
     };
 
     constructor(props) {
         super(props)
+
+        this.submit = this.submit.bind(this);
     }
 
-    componentWillMount() {
-        this.setState({
-            text: 'strasbourg',
-        })
+    submit() {
+        this.props.navigation.navigate('Result', {
+            city: this.state.city
+        });
     }
 
-    handleState(text: string) {
-        this.setState({text});
+    handleState(city: string) {
+        return this.setState((state: State) => {
+            state.city = city;
+
+            console.log('set: ' + state.city);
+            return state;
+        });
     }
 
     render() {
         return (
-            <Fragment>
+            <View>
                 <TextInput
-                    value={this.state.text}
-                    onChangeText={text => this.handleState(text)}
+                    value={this.state.city}
+                    onChangeText={city => this.handleState(city)}
                     style={styles.input}
                     underlineColorAndroid={'transparent'}
                 />
-            </Fragment>
+                <Button title={'search'} onPress={this.submit} color={Colors.tintColor}/>
+            </View>
         );
     }
 }

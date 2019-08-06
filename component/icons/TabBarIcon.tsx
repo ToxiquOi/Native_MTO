@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
-import Colors from "../../../constants/Colors";
+import Colors from "../../constants/Colors";
 
 interface Props {
     name: string,
